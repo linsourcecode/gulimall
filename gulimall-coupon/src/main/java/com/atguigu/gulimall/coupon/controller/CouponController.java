@@ -1,8 +1,10 @@
 package com.atguigu.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
+import com.atguigu.gulimall.coupon.entity.CouponHistoryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -21,14 +23,12 @@ import com.atguigu.common.utils.R;
 
 /**
  * 优惠券信息
+ * @RefreshScope nacos配置刷新位置
  *
- * @author leifengyang
- * @email leifengyang@gmail.com
- * @date 2019-10-08 09:36:40
  */
 @RefreshScope
 @RestController
-@RequestMapping("coupon/coupon")
+@RequestMapping("/coupon/coupon")
 public class CouponController {
     @Autowired
     private CouponService couponService;
@@ -49,7 +49,25 @@ public class CouponController {
     public R membercoupons(){
         CouponEntity couponEntity = new CouponEntity();
         couponEntity.setCouponName("满100减10");
+        System.out.println("测试是否openfeigin");
+
         return R.ok().put("coupons",Arrays.asList(couponEntity));
+    }
+    /** 模拟获取数据库信息判断是否领取优惠卷
+     *
+     * */
+
+    @RequestMapping("/member/late")
+    public R detailinfo(){
+        CouponHistoryEntity coupon=new CouponHistoryEntity();
+        coupon.setCreateTime(new Date());
+
+        coupon.setMemberNickName("小路");
+
+
+        return  R.ok().put("couponbefores",Arrays.asList(coupon));
+
+
     }
 
     /**
@@ -62,6 +80,7 @@ public class CouponController {
 
         return R.ok().put("page", page);
     }
+
 
 
     /**

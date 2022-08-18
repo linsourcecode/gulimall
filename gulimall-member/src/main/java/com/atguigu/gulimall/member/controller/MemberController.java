@@ -1,6 +1,7 @@
 package com.atguigu.gulimall.member.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
 
 import com.atguigu.gulimall.member.feign.CouponFeignService;
@@ -41,6 +42,15 @@ public class MemberController {
 
         R membercoupons = couponFeignService.membercoupons();
         return R.ok().put("member",memberEntity).put("coupons",membercoupons.get("coupons"));
+    }
+
+
+    @RequestMapping("/before")
+    public R getBeforeinofo(){
+
+          R info = couponFeignService.beforecoupons();
+
+          return  R.ok().put("couponbefores", info.get("couponbefores"));
     }
 
 
